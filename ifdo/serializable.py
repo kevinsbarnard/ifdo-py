@@ -1,31 +1,30 @@
-from typing import Optional, List, Dict, Callable, Union, get_args, get_origin
+from typing import Optional, Callable, Union, get_args, get_origin
 from dataclasses import dataclass, fields, MISSING
-from benedict import benedict
 
 
-def dto(case_func: Optional[Callable] = None):
+def serializable(case_func: Optional[Callable] = None):
     """
-    Decorator that creates a dataclass with methods to convert it to/from a benedict object.
+    Decorator that creates a dataclass with methods to convert it to/from a dict object.
 
     Args:
         case_func: Optional function to transform field names (e.g. stringcase.spinalcase). Default is None.
 
     Returns:
-        Decorator function that converts a class into a dataclass with to_benedict and from_benedict methods.
+        Decorator function that converts a class into a dataclass with to_dict and from_dict methods.
     """
     def decorator(cls):
         # Turn the class into a dataclass
         cls = dataclass(cls)
 
-        # Define the to_benedict method
-        def to_benedict(self) -> benedict:
+        # Define the to_dict method
+        def to_dict(self) -> dict:
             """
-            Convert the object to a benedict object.
+            Convert the object to a dict object.
             
             Returns:
-                benedict object
+                dict object
             """
-            d = benedict(keypath_separator=None)
+            d = dict()
             for field in fields(self):
                 name = field.name
                 if case_func is not None:
@@ -34,22 +33,22 @@ def dto(case_func: Optional[Callable] = None):
                 if value is None:
                     continue
                 if isinstance(value, list):
-                    d[name] = [item.to_benedict() if hasattr(item, 'to_benedict') else item for item in value]
+                    d[name] = [item.to_dict() if hasattr(item, 'to_dict') else item for item in value]
                 elif isinstance(value, dict):
-                    d[name] = {k: v.to_benedict() if hasattr(v, 'to_benedict') else v for k, v in value.items()}
-                elif hasattr(value, 'to_benedict'):
-                    d[name] = value.to_benedict()
+                    d[name] = {k: v.to_dict() if hasattr(v, 'to_dict') else v for k, v in value.items()}
+                elif hasattr(value, 'to_dict'):
+                    d[name] = value.to_dict()
                 else:
                     d[name] = value
             return d
 
-        # Define the from_benedict method
-        def from_benedict(cls, d: benedict):
+        # Define the from_dict method
+        def from_dict(cls, d: dict):
             """
-            Convert a benedict object to an object of this class.
+            Convert a dict object to an object of this class.
             
             Args:
-                d: benedict object
+                d: dict object
             
             Returns:
                 Object of this class
@@ -78,22 +77,22 @@ def dto(case_func: Optional[Callable] = None):
                     
                     if field_origin is list and isinstance(value, list):
                         inner_type = field_args[0]
-                        inner_values = [inner_type.from_benedict(v) if hasattr(inner_type, 'from_benedict') else v for v in value]
+                        inner_values = [inner_type.from_dict(v) if hasattr(inner_type, 'from_dict') else v for v in value]
                         kwargs[field.name] = inner_values
                     elif field_origin is dict and isinstance(value, dict):
                         inner_types = field_args
                         inner_key_type, inner_value_type = inner_types[0], inner_types[1]
                         inner_values = {
                             inner_key_type(vk): (
-                                inner_value_type.from_benedict(vv) 
-                                if hasattr(inner_value_type, 'from_benedict') else vv
+                                inner_value_type.from_dict(vv) 
+                                if hasattr(inner_value_type, 'from_dict') else vv
                             ) 
                             for vk, vv in value.items()
                         }
                         kwargs[field.name] = inner_values
                     else:
-                        if hasattr(field_type, 'from_benedict'):
-                            kwargs[field.name] = field_type.from_benedict(value)
+                        if hasattr(field_type, 'from_dict'):
+                            kwargs[field.name] = field_type.from_dict(value)
                         elif isinstance(value, field_type) or value is None:
                             kwargs[field.name] = value
                         else:
@@ -107,18 +106,8 @@ def dto(case_func: Optional[Callable] = None):
             return cls(**kwargs)
 
         # Add the new methods to the class
-        cls.to_benedict = to_benedict
-        cls.from_benedict = classmethod(from_benedict)
-        
-        # Pass-through the {to,from}_{json,yaml} methods
-        if hasattr(benedict, 'to_json'):
-            cls.to_json = lambda self, *args, **kwargs: self.to_benedict().to_json(*args, **kwargs)
-        if hasattr(benedict, 'to_yaml'):
-            cls.to_yaml = lambda self, *args, **kwargs: self.to_benedict().to_yaml(*args, **kwargs)
-        if hasattr(benedict, 'from_json'):
-            cls.from_json = classmethod(lambda cls, *args, **kwargs: cls.from_benedict(benedict.from_json(*args, keypath_separator=None, **kwargs)))
-        if hasattr(benedict, 'from_yaml'):
-            cls.from_yaml = classmethod(lambda cls, *args, **kwargs: cls.from_benedict(benedict.from_yaml(*args, keypath_separator=None, **kwargs)))
+        cls.to_dict = to_dict
+        cls.from_dict = classmethod(from_dict)
 
         # Return the modified class
         return cls

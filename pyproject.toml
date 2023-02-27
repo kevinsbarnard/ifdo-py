@@ -8,12 +8,7 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.8"
-python-benedict = "^0.28.3"
 stringcase = "^1.2.0"
-
-
-[tool.poetry.group.dev.dependencies]
-pytest = "^7.2.1"
 
 [build-system]
 requires = ["poetry-core"]

@@ -1,46 +1,45 @@
-from datetime import datetime
 from typing import Dict, List, Optional
-from ifdo.dto import dto
+from ifdo.serializable import serializable
 from stringcase import spinalcase
 
-ifdo_dto = dto(case_func=spinalcase)  # Use spinalcase for all field names
+ifdo_entity = serializable(case_func=spinalcase)  # Use spinalcase for all field names
 
 
-@ifdo_dto
+@ifdo_entity
 class ImagePI:
     name: str
     orcid: str
 
 
-@ifdo_dto
+@ifdo_entity
 class ImageAnnotationLabel:
     id: str
     name: str
     info: str
 
 
-@ifdo_dto
+@ifdo_entity
 class ImageAnnotationCreator:
     id: str
     name: str
     type: str
 
 
-@ifdo_dto
+@ifdo_entity
 class AnnotationCoordinate:
     x: float
     y: float
 
 
-@ifdo_dto
+@ifdo_entity
 class AnnotationLabel:
     id: str
     annotator: str
-    created_at: datetime
+    created_at: str
     confidence: float
 
 
-@ifdo_dto
+@ifdo_entity
 class ImageAnnotation:
     coordinates: List[AnnotationCoordinate]
     labels: List[AnnotationLabel]
@@ -48,10 +47,10 @@ class ImageAnnotation:
     frames: Optional[List[float]] = None
 
 
-@ifdo_dto
+@ifdo_entity
 class ImageSetItem:
     # iFDO core (required)
-    image_datetime: Optional[datetime] = None
+    image_datetime: Optional[str] = None
     image_latitude: Optional[float] = None
     image_longitude: Optional[float] = None
     image_depth: Optional[float] = None
@@ -100,13 +99,13 @@ class ImageSetItem:
     image_annotations: Optional[List[ImageAnnotation]] = None
 
 
-@ifdo_dto
+@ifdo_entity
 class ImageSetHeader:
     image_set_name: str
     image_set_uuid: str
     image_set_handle: str
     image_set_ifdo_version: Optional[str] = None
-    image_datetime: Optional[datetime] = None
+    image_datetime: Optional[str] = None
     image_latitude: Optional[float] = None
     image_longitude: Optional[float] = None
     image_depth: Optional[float] = None
@@ -127,7 +126,7 @@ class ImageSetHeader:
     image_abstract: Optional[str] = None
 
 
-@ifdo_dto
+@ifdo_entity
 class iFDO:
     image_set_header: ImageSetHeader
     image_set_items: Dict[str, ImageSetItem]
