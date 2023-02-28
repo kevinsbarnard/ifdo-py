@@ -1,45 +1,49 @@
-from typing import Dict, List, Optional
-from ifdo.serializable import serializable
+from datetime import datetime
+from pathlib import Path
+from typing import Dict, List, Optional, Tuple, Union
+
+from yaml import safe_dump, safe_load
+from ifdo.model import model
 from stringcase import spinalcase
 
-ifdo_entity = serializable(case_func=spinalcase)  # Use spinalcase for all field names
+ifdo_model = model(case_func=spinalcase)  # Use spinalcase for all field names
 
 
-@ifdo_entity
+@ifdo_model
 class ImagePI:
     name: str
     orcid: str
 
 
-@ifdo_entity
+@ifdo_model
 class ImageAnnotationLabel:
     id: str
     name: str
     info: str
 
 
-@ifdo_entity
+@ifdo_model
 class ImageAnnotationCreator:
     id: str
     name: str
     type: str
 
 
-@ifdo_entity
+@ifdo_model
 class AnnotationCoordinate:
     x: float
     y: float
 
 
-@ifdo_entity
+@ifdo_model
 class AnnotationLabel:
     id: str
     annotator: str
-    created_at: str
+    created_at: datetime
     confidence: float
 
 
-@ifdo_entity
+@ifdo_model
 class ImageAnnotation:
     coordinates: List[AnnotationCoordinate]
     labels: List[AnnotationLabel]
@@ -47,10 +51,60 @@ class ImageAnnotation:
     frames: Optional[List[float]] = None
 
 
-@ifdo_entity
-class ImageSetItem:
+@ifdo_model
+class CameraPose:
+    pose_utm_zone: str
+    pose_utm_epsg: str
+    pose_utm_east_north_up_meters: List[float]
+    pose_absolute_orientation_utm_matrix: List[List[float]]
+
+
+@ifdo_model
+class CameraHousingViewport:
+    viewport_type: str
+    viewport_optical_density: float
+    viewport_thickness_millimeter: float
+    viewport_extra_description: str
+
+
+@ifdo_model
+class FlatportParameters:
+    flatport_lens_port_distance_millimeter: float
+    flatport_interface_normal_direction: Tuple[float, float, float]
+    flatport_extra_description: str
+
+
+@ifdo_model
+class DomeportParameters:
+    domeport_outer_radius_millimeter: float
+    domeport_decentering_offset_xyz_millimeter: Tuple[float, float, float]
+    domeport_extra_description: str
+
+
+@ifdo_model
+class CameraCalibrationModel:
+    calibration_model_type: str
+    calibration_focal_length_xy_pixel: Tuple[float, float]
+    calibration_principal_point_xy_pixel: Tuple[float, float]
+    calibration_distortion_coefficients: List[float]
+    calibration_approximate_field_of_view_water_xy_degree: Tuple[float, float]
+    calibration_model_extra_description: str
+
+
+@ifdo_model
+class PhotometricCalibration:
+    photometric_sequence_white_balancing: str
+    photometric_exposure_factor_RGB: Tuple[float, float, float]
+    photometric_sequence_illumination_type: str
+    photometric_sequence_illumination_description: str
+    photometric_illumination_factor_RGB: Tuple[float, float, float]
+    photometric_water_properties_description: str
+
+
+@ifdo_model
+class ImageData:
     # iFDO core (required)
-    image_datetime: Optional[str] = None
+    image_datetime: Optional[datetime] = None
     image_latitude: Optional[float] = None
     image_longitude: Optional[float] = None
     image_depth: Optional[float] = None
@@ -82,6 +136,28 @@ class ImageSetItem:
     image_spectral_resolution: Optional[str] = None
     image_capture_mode: Optional[str] = None
     image_fauna_attraction: Optional[str] = None
+    image_area_square_meter: Optional[float] = None
+    image_meters_above_ground: Optional[float] = None
+    image_acquisition_settings: Optional[dict] = None
+    image_camera_yaw_degrees: Optional[float] = None
+    image_camera_pitch_degrees: Optional[float] = None
+    image_camera_roll_degrees: Optional[float] = None
+    image_overlap_fraction: Optional[float] = None
+    image_datetime_format: Optional[str] = None
+    image_camera_pose: Optional[CameraPose] = None
+    image_camera_housing_viewport: Optional[CameraHousingViewport] = None
+    image_flatport_parameters: Optional[FlatportParameters] = None
+    image_domeport_parameters: Optional[DomeportParameters] = None
+    image_camera_calibration_model: Optional[CameraCalibrationModel] = None
+    image_photometric_calibration: Optional[PhotometricCalibration] = None
+    image_objective: Optional[str] = None
+    image_target_environment: Optional[str] = None
+    image_target_timescale: Optional[str] = None
+    image_spatial_constraints: Optional[str] = None
+    image_temporal_constraints: Optional[str] = None
+    image_time_synchronization: Optional[str] = None
+    image_item_identification_scheme: Optional[str] = None
+    image_curation_protocol: Optional[str] = None
     
     # iFDO content (optional)
     image_entropy: Optional[float] = None
@@ -99,13 +175,15 @@ class ImageSetItem:
     image_annotations: Optional[List[ImageAnnotation]] = None
 
 
-@ifdo_entity
+@ifdo_model
 class ImageSetHeader:
     image_set_name: str
     image_set_uuid: str
     image_set_handle: str
-    image_set_ifdo_version: Optional[str] = None
-    image_datetime: Optional[str] = None
+    image_set_ifdo_version: str = "v1.0.0"
+    
+    # iFDO core (required)
+    image_datetime: Optional[datetime] = None
     image_latitude: Optional[float] = None
     image_longitude: Optional[float] = None
     image_depth: Optional[float] = None
@@ -124,9 +202,87 @@ class ImageSetHeader:
     image_license: Optional[str] = None
     image_copyright: Optional[str] = None
     image_abstract: Optional[str] = None
+    
+    # iFDO capture (optional)
+    image_acquisition: Optional[str] = None
+    image_quality: Optional[str] = None
+    image_deployment: Optional[str] = None
+    image_navigation: Optional[str] = None
+    image_scale_reference: Optional[str] = None
+    image_illumination: Optional[str] = None
+    image_pixel_mag: Optional[str] = None
+    image_marine_zone: Optional[str] = None
+    image_spectral_resolution: Optional[str] = None
+    image_capture_mode: Optional[str] = None
+    image_fauna_attraction: Optional[str] = None
+    image_area_square_meter: Optional[float] = None
+    image_meters_above_ground: Optional[float] = None
+    image_acquisition_settings: Optional[dict] = None
+    image_camera_yaw_degrees: Optional[float] = None
+    image_camera_pitch_degrees: Optional[float] = None
+    image_camera_roll_degrees: Optional[float] = None
+    image_overlap_fraction: Optional[float] = None
+    image_datetime_format: Optional[str] = None
+    image_camera_pose: Optional[CameraPose] = None
+    image_camera_housing_viewport: Optional[CameraHousingViewport] = None
+    image_flatport_parameters: Optional[FlatportParameters] = None
+    image_domeport_parameters: Optional[DomeportParameters] = None
+    image_camera_calibration_model: Optional[CameraCalibrationModel] = None
+    image_photometric_calibration: Optional[PhotometricCalibration] = None
+    image_objective: Optional[str] = None
+    image_target_environment: Optional[str] = None
+    image_target_timescale: Optional[str] = None
+    image_spatial_constraints: Optional[str] = None
+    image_temporal_constraints: Optional[str] = None
+    image_time_synchronization: Optional[str] = None
+    image_item_identification_scheme: Optional[str] = None
+    image_curation_protocol: Optional[str] = None
+    
+    # iFDO content (optional)
+    image_entropy: Optional[float] = None
+    image_particle_count: Optional[int] = None
+    image_average_color: Optional[List[int]] = None
+    image_mpeg7_colorlayout: Optional[List[float]] = None
+    image_mpeg7_colorstatistics: Optional[List[float]] = None
+    image_mpeg7_colorstructure: Optional[List[float]] = None
+    image_mpeg7_dominantcolor: Optional[List[float]] = None
+    image_mpeg7_edgehistogram: Optional[List[float]] = None
+    image_mpeg7_homogenoustexture: Optional[List[float]] = None
+    image_mpeg7_stablecolor: Optional[List[float]] = None
+    image_annotation_labels: Optional[List[ImageAnnotationLabel]] = None
+    image_annotation_creators: Optional[List[ImageAnnotationCreator]] = None
+    image_annotations: Optional[List[ImageAnnotation]] = None
 
 
-@ifdo_entity
+@ifdo_model
 class iFDO:
     image_set_header: ImageSetHeader
-    image_set_items: Dict[str, ImageSetItem]
+    image_set_items: Dict[str, List[ImageData]]
+    
+    @classmethod
+    def load(cls, path: Union[str, Path], coerce: bool = False) -> 'iFDO':
+        """
+        Load an iFDO from a YAML file.
+        
+        Args:
+            path: Path to the YAML file.
+            coerce: If True, coerce the loaded values to the Python iFDO model types.
+        
+        Returns:
+            The loaded iFDO object.
+        """
+        path = Path(path)  # Ensure Path object
+        with path.open() as f:
+            d = safe_load(f)
+        return cls.from_dict(d)
+    
+    def save(self, path: Union[str, Path]) -> None:
+        """
+        Save to a YAML file.
+        
+        Args:
+            path: Path to the YAML file.
+        """
+        path = Path(path)  # Ensure Path object
+        with path.open('w') as f:
+            safe_dump(self.to_dict(), f)
