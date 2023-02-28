@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "ifdo"
-version = "0.1.0"
+version = "1.0.0"
 description = "iFDO utilities"
 authors = ["Kevin Barnard <kbarnard@mbari.org>"]
 license = "MIT"

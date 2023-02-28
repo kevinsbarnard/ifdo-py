@@ -14,14 +14,11 @@ pip install ifdo
 ```python
 from ifdo import iFDO
 
-# Read from YAML
-ifdo = iFDO.from_yaml("path/to/ifdo.yaml")
+# Read from YAML file
+ifdo_object = iFDO.load("path/to/ifdo.yaml")
 
 # Write to YAML
-ifdo.to_yaml("path/to/ifdo.yaml")
-
-# Write to JSON
-ifdo.to_json("path/to/ifdo.json")
+ifdo_object.save("path/to/ifdo.yaml")
 ```
 
 ### Create image annotations
@@ -43,24 +40,26 @@ label = AnnotationLabel(id="fish", annotator="kevin", created_at=datetime.now(),
 # Pack it into an annotation
 annotation = ImageAnnotation(coordinates=coordinates, labels=[label], shape='rectangle')
 
-# Print it as a YAML string
-print(annotation.to_yaml())
+# Print it as a dictionary
+print(annotation.to_dict())
 ```
 
-```yaml
-coordinates:
-- x: 0
-  y: 0
-- x: 1
-  y: 0
-- x: 1
-  y: 1
-- x: 0
-  y: 1
-labels:
-- annotator: kevin
-  confidence: 0.9
-  created-at: '2023-02-26T14:19:54.604209'
-  id: fish
-shape: rectangle
+```python
+{
+  'coordinates': [
+    {'x': 0, 'y': 0}, 
+    {'x': 1, 'y': 0}, 
+    {'x': 1, 'y': 1}, 
+    {'x': 0, 'y': 1}
+  ], 
+  'labels': [
+    {
+      'id': 'fish', 
+      'annotator': 'kevin', 
+      'created-at': datetime.datetime(2023, 2, 28, 16, 39, 46, 451290), 
+      'confidence': 0.9
+    }
+  ], 
+  'shape': 'rectangle'
+}
 ```
