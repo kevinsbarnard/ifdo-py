@@ -1,3 +1,5 @@
+from datetime import datetime
+from enum import Enum
 from typing import Any, Optional, Callable, Union, get_args, get_origin
 from dataclasses import dataclass, fields, MISSING
 
@@ -16,8 +18,10 @@ def parse_value(field_class, value: Any, coerce: bool = False) -> Any:
     """
     if hasattr(field_class, 'from_dict'):
         return field_class.from_dict(value, coerce=coerce)
-    elif coerce:
+    elif issubclass(field_class, Enum):
         return field_class(value)
+    elif coerce:
+        return value if isinstance(value, field_class) else field_class(value)
     else:
         return value
 
@@ -56,8 +60,41 @@ def parse_field(field_type, value: Any, coerce: bool = False) -> Any:
     elif field_origin is dict:
         inner_key_type, inner_value_type = field_args
         return {parse_field(inner_key_type, k, coerce=coerce): parse_field(inner_value_type, v, coerce=coerce) for k, v in value.items()}
+    elif field_origin is Union:
+        for inner_type in field_args:
+            try:
+                return parse_field(inner_type, value, coerce=coerce)
+            except ValueError:
+                pass
+        raise ValueError(f'Could not parse value {value} as any of {field_args}')
     else:
         return parse_value(field_type, value, coerce=coerce)
+
+
+def encode_value(value: Any) -> Any:
+    """
+    Encode a value to be JSON serializable.
+    
+    Args:
+        value: Value to encode
+    
+    Returns:
+        Encoded value
+    """
+    if isinstance(value, Enum):
+        return value.value
+    elif isinstance(value, datetime):
+        return value.isoformat()
+    elif isinstance(value, list):
+        return [encode_value(v) for v in value]
+    elif isinstance(value, tuple):
+        return tuple(encode_value(v) for v in value)
+    elif isinstance(value, dict):
+        return {encode_value(k): encode_value(v) for k, v in value.items()}
+    elif hasattr(value, 'to_dict'):
+        return value.to_dict()
+    else:
+        return value
 
 
 def model(case_func: Optional[Callable] = None):
@@ -90,16 +127,10 @@ def model(case_func: Optional[Callable] = None):
                 value = getattr(self, field.name)
                 if value is None:
                     continue
-                if isinstance(value, list):
-                    d[name] = [item.to_dict() if hasattr(item, 'to_dict') else item for item in value]
-                elif isinstance(value, tuple):
-                    d[name] = tuple(item.to_dict() if hasattr(item, 'to_dict') else item for item in value)
-                elif isinstance(value, dict):
-                    d[name] = {k: v.to_dict() if hasattr(v, 'to_dict') else v for k, v in value.items()}
-                elif hasattr(value, 'to_dict'):
-                    d[name] = value.to_dict()
-                else:
-                    d[name] = value
+                
+                encoded_value = encode_value(value)
+                
+                d[name] = encoded_value
             return d
 
         # Define the from_dict method
@@ -123,7 +154,10 @@ def model(case_func: Optional[Callable] = None):
                 if field_key in d:
                     value = d[field_key]
                     
-                    parsed_value = parse_field(field.type, value, coerce=coerce)
+                    try:
+                        parsed_value = parse_field(field.type, value, coerce=coerce)
+                    except ValueError as e:
+                        raise ValueError(f'Could not parse value {value} for field {field_key}: {e}')
                     
                     if parsed_value is None:  # Use default value/factory if parsed value is None
                         if field.default != MISSING:

@@ -1,4 +1,5 @@
 from datetime import datetime
+from enum import Enum
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple, Union
 
@@ -7,6 +8,83 @@ from ifdo.model import model
 from stringcase import spinalcase
 
 ifdo_model = model(case_func=spinalcase)  # Use spinalcase for all field names
+
+
+class ImageAcquisition(str, Enum):
+    PHOTO = "photo"
+    VIDEO = "video"
+    SLIDE = "slide"
+
+
+class ImageQuality(str, Enum):
+    RAW = "raw"
+    PROCESSED = "processed"
+    PRODUCT = "product"
+
+
+class ImageDeployment(str, Enum):
+    MAPPING = "mapping"
+    STATIONARY = "stationary"
+    SURVEY = "survey"
+    EXPLORATION = "exploration"
+    EXPERIMENT = "experiment"
+
+
+class ImageNavigation(str, Enum):
+    SATELLITE = "satellite"
+    BEACON = "beacon"
+    TRANSPONDER = "transponder"
+    RECONSTRUCTED = "reconstructed"
+
+
+class ImageScaleReference(str, Enum):
+    CAMERA_3D = "3D camera"
+    CAMERA_CALIBRATED = "calibrated camera"
+    LASER_MARKER = "laser marker"
+    OPTICAL_FLOW = "optical flow"
+
+
+class ImageIllumination(str, Enum):
+    SUNLIGHT = "sunlight"
+    ARTIFICIAL_LIGHT = "artificial light"
+    MIXED_LIGHT = "mixed light"
+
+
+class ImagePixelMagnitude(str, Enum):
+    KM = "km"
+    HM = "hm"
+    DAM = "dam"
+    M = "m"
+    CM = "cm"
+    MM = "mm"
+    UM = "µm"
+
+
+class ImageMarineZone(str, Enum):
+    SEAFLOOR = "seafloor"
+    WATER_COLUMN = "water column"
+    SEA_SURFACE = "sea surface"
+    ATMOSPHERE = "atmosphere"
+    LABORATORY = "laboratory"
+
+
+class ImageSpectralResolution(str, Enum):
+    GRAYSCALE = "grayscale"
+    RGB = "rgb"
+    MULTI_SPECTRAL = "multi-spectral"
+    HYPER_SPECTRAL = "hyper-spectral"
+
+
+class ImageCaptureMode(str, Enum):
+    TIMER = "timer"
+    MANUAL = "manual"
+    MIXED = "mixed"
+
+
+class ImageFaunaAttraction(str, Enum):
+    NONE = "none"
+    BAITED = "baited"
+    LIGHT = "light"
 
 
 @ifdo_model
@@ -30,24 +108,18 @@ class ImageAnnotationCreator:
 
 
 @ifdo_model
-class AnnotationCoordinate:
-    x: float
-    y: float
-
-
-@ifdo_model
 class AnnotationLabel:
-    id: str
+    label: str
     annotator: str
-    created_at: datetime
-    confidence: float
+    created_at: Optional[datetime] = None
+    confidence: Optional[float] = None
 
 
 @ifdo_model
 class ImageAnnotation:
-    coordinates: List[AnnotationCoordinate]
+    coordinates: Union[List[float], List[List[float]]]
     labels: List[AnnotationLabel]
-    shape: str
+    shape: Optional[str] = None
     frames: Optional[List[float]] = None
 
 
@@ -64,21 +136,21 @@ class CameraHousingViewport:
     viewport_type: str
     viewport_optical_density: float
     viewport_thickness_millimeter: float
-    viewport_extra_description: str
+    viewport_extra_description: Optional[str] = None
 
 
 @ifdo_model
 class FlatportParameters:
     flatport_lens_port_distance_millimeter: float
     flatport_interface_normal_direction: Tuple[float, float, float]
-    flatport_extra_description: str
+    flatport_extra_description: Optional[str] = None
 
 
 @ifdo_model
 class DomeportParameters:
     domeport_outer_radius_millimeter: float
     domeport_decentering_offset_xyz_millimeter: Tuple[float, float, float]
-    domeport_extra_description: str
+    domeport_extra_description: Optional[str] = None
 
 
 @ifdo_model
@@ -88,7 +160,7 @@ class CameraCalibrationModel:
     calibration_principal_point_xy_pixel: Tuple[float, float]
     calibration_distortion_coefficients: List[float]
     calibration_approximate_field_of_view_water_xy_degree: Tuple[float, float]
-    calibration_model_extra_description: str
+    calibration_model_extra_description: Optional[str] = None
 
 
 @ifdo_model
@@ -125,17 +197,17 @@ class ImageData:
     image_abstract: Optional[str] = None
     
     # iFDO capture (optional)
-    image_acquisition: Optional[str] = None
-    image_quality: Optional[str] = None
-    image_deployment: Optional[str] = None
-    image_navigation: Optional[str] = None
-    image_scale_reference: Optional[str] = None
-    image_illumination: Optional[str] = None
-    image_pixel_mag: Optional[str] = None
-    image_marine_zone: Optional[str] = None
-    image_spectral_resolution: Optional[str] = None
-    image_capture_mode: Optional[str] = None
-    image_fauna_attraction: Optional[str] = None
+    image_acquisition: Optional[ImageAcquisition] = None
+    image_quality: Optional[ImageQuality] = None
+    image_deployment: Optional[ImageDeployment] = None
+    image_navigation: Optional[ImageNavigation] = None
+    image_scale_reference: Optional[ImageScaleReference] = None
+    image_illumination: Optional[ImageIllumination] = None
+    image_pixel_mag: Optional[ImagePixelMagnitude] = None
+    image_marine_zone: Optional[ImageMarineZone] = None
+    image_spectral_resolution: Optional[ImageSpectralResolution] = None
+    image_capture_mode: Optional[ImageCaptureMode] = None
+    image_fauna_attraction: Optional[ImageFaunaAttraction] = None
     image_area_square_meter: Optional[float] = None
     image_meters_above_ground: Optional[float] = None
     image_acquisition_settings: Optional[dict] = None
@@ -204,17 +276,17 @@ class ImageSetHeader:
     image_abstract: Optional[str] = None
     
     # iFDO capture (optional)
-    image_acquisition: Optional[str] = None
-    image_quality: Optional[str] = None
-    image_deployment: Optional[str] = None
-    image_navigation: Optional[str] = None
-    image_scale_reference: Optional[str] = None
-    image_illumination: Optional[str] = None
-    image_pixel_mag: Optional[str] = None
-    image_marine_zone: Optional[str] = None
-    image_spectral_resolution: Optional[str] = None
-    image_capture_mode: Optional[str] = None
-    image_fauna_attraction: Optional[str] = None
+    image_acquisition: Optional[ImageAcquisition] = None
+    image_quality: Optional[ImageQuality] = None
+    image_deployment: Optional[ImageDeployment] = None
+    image_navigation: Optional[ImageNavigation] = None
+    image_scale_reference: Optional[ImageScaleReference] = None
+    image_illumination: Optional[ImageIllumination] = None
+    image_pixel_mag: Optional[ImagePixelMagnitude] = None
+    image_marine_zone: Optional[ImageMarineZone] = None
+    image_spectral_resolution: Optional[ImageSpectralResolution] = None
+    image_capture_mode: Optional[ImageCaptureMode] = None
+    image_fauna_attraction: Optional[ImageFaunaAttraction] = None
     image_area_square_meter: Optional[float] = None
     image_meters_above_ground: Optional[float] = None
     image_acquisition_settings: Optional[dict] = None
