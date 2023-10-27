@@ -1,6 +1,6 @@
 from datetime import datetime
 from enum import Enum
-from typing import Any, Optional, Callable, Union, get_args, get_origin
+from typing import Any, Optional, Callable, Union, TypeVar, Type, get_args, get_origin
 from dataclasses import dataclass, fields, MISSING
 
 
@@ -97,7 +97,8 @@ def encode_value(value: Any) -> Any:
         return value
 
 
-def model(case_func: Optional[Callable] = None):
+T = TypeVar("T")
+def model(case_func: Optional[Callable] = None) -> Callable[[Type[T]], Type[T]]:
     """
     Decorator that creates a dataclass with methods to convert it to/from a dict object.
 
@@ -107,7 +108,7 @@ def model(case_func: Optional[Callable] = None):
     Returns:
         Decorator function that converts a class into a dataclass with to_dict and from_dict methods.
     """
-    def decorator(cls):
+    def decorator(cls: Type[T]) -> Type[T]:
         # Turn the class into a dataclass
         cls = dataclass(cls)
 
