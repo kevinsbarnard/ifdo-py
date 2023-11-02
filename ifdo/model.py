@@ -1,39 +1,38 @@
 from datetime import datetime
 from enum import Enum
 from typing import Any, Optional, Callable, Union, TypeVar, Type, get_args, get_origin
-from dataclasses import dataclass, fields, MISSING
+from dataclasses import fields, MISSING
+from pydantic.dataclasses import dataclass
 
 
-def parse_value(field_class, value: Any, coerce: bool = False) -> Any:
+def parse_value(field_class, value: Any) -> Any:
     """
     Parse a value given its class.
     
     Args:
         field_class: Class of the value
         value: Value to parse
-        coerce: Whether to coerce the value to the field class. Default is False.
     
     Returns:
         Parsed value
     """
     if hasattr(field_class, 'from_dict'):
-        return field_class.from_dict(value, coerce=coerce)
+        return field_class.from_dict(value)
     elif issubclass(field_class, Enum):
         return field_class(value)
-    elif coerce:
-        return value if isinstance(value, field_class) else field_class(value)
+    elif issubclass(field_class, datetime):
+        return datetime.strptime(value, '%Y-%m-%d %H:%M:%S.%f')
     else:
         return value
 
 
-def parse_field(field_type, value: Any, coerce: bool = False) -> Any:
+def parse_field(field_type, value: Any) -> Any:
     """
     Parse a field value given its type annotation.
     
     Args:
         field_type: Type annotation of the field
         value: Value to parse
-        coerce: Whether to coerce the value to the field class. Default is False.
     
     Returns:
         Parsed value
@@ -54,21 +53,21 @@ def parse_field(field_type, value: Any, coerce: bool = False) -> Any:
     
     if field_origin is list:
         inner_type = field_args[0]
-        return [parse_field(inner_type, v, coerce=coerce) for v in value]
+        return [parse_field(inner_type, v) for v in value]
     elif field_origin is tuple:
-        return tuple(parse_field(inner_type, v, coerce=coerce) for inner_type, v in zip(field_args, value))
+        return tuple(parse_field(inner_type, v) for inner_type, v in zip(field_args, value))
     elif field_origin is dict:
         inner_key_type, inner_value_type = field_args
-        return {parse_field(inner_key_type, k, coerce=coerce): parse_field(inner_value_type, v, coerce=coerce) for k, v in value.items()}
+        return {parse_field(inner_key_type, k): parse_field(inner_value_type, v) for k, v in value.items()}
     elif field_origin is Union:
         for inner_type in field_args:
             try:
-                return parse_field(inner_type, value, coerce=coerce)
+                return parse_field(inner_type, value)
             except ValueError:
                 pass
         raise ValueError(f'Could not parse value {value} as any of {field_args}')
     else:
-        return parse_value(field_type, value, coerce=coerce)
+        return parse_value(field_type, value)
 
 
 def encode_value(value: Any) -> Any:
@@ -84,7 +83,7 @@ def encode_value(value: Any) -> Any:
     if isinstance(value, Enum):
         return value.value
     elif isinstance(value, datetime):
-        return value.isoformat()
+        return datetime.strftime(value, '%Y-%m-%d %H:%M:%S.%f')
     elif isinstance(value, list):
         return [encode_value(v) for v in value]
     elif isinstance(value, tuple):
@@ -135,13 +134,12 @@ def model(case_func: Optional[Callable] = None) -> Callable[[Type[T]], Type[T]]:
             return d
 
         # Define the from_dict method
-        def from_dict(cls, d: dict, coerce: bool = False):
+        def from_dict(cls, d: dict):
             """
             Convert a dict object to an object of this class.
             
             Args:
                 d: dict object
-                coerce: If True, coerce values to the annotated types.
             
             Returns:
                 Object of this class
@@ -156,7 +154,7 @@ def model(case_func: Optional[Callable] = None) -> Callable[[Type[T]], Type[T]]:
                     value = d[field_key]
                     
                     try:
-                        parsed_value = parse_field(field.type, value, coerce=coerce)
+                        parsed_value = parse_field(field.type, value)
                     except ValueError as e:
                         raise ValueError(f'Could not parse value {value} for field {field_key}: {e}')
                     

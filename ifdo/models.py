@@ -332,13 +332,12 @@ class iFDO:
     image_set_items: Dict[str, List[ImageData]]
     
     @classmethod
-    def load(cls, path: Union[str, Path], coerce: bool = False) -> 'iFDO':
+    def load(cls, path: Union[str, Path]) -> 'iFDO':
         """
         Load an iFDO from a YAML file.
         
         Args:
             path: Path to the YAML file.
-            coerce: If True, coerce the loaded values to the Python iFDO model types.
         
         Returns:
             The loaded iFDO object.
