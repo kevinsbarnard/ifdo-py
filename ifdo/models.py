@@ -356,4 +356,4 @@ class iFDO:
         """
         path = Path(path)  # Ensure Path object
         with path.open('w') as f:
-            safe_dump(self.to_dict(), f)
+            safe_dump(self.to_dict(), f, sort_keys=False)
