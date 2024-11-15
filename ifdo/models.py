@@ -3,6 +3,7 @@ from enum import Enum
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple, Union
 
+from pydantic import BaseModel, Field, field_validator
 from yaml import safe_dump, safe_load
 from ifdo.model import model
 from stringcase import spinalcase
@@ -174,12 +175,30 @@ class PhotometricCalibration:
     photometric_water_properties_description: str
 
 
+class CoordinateValidation(BaseModel):
+    image_latitude: Optional[float] = Field(None, ge=-90, le=90)
+    image_longitude: Optional[float] = Field(None, ge=-180, le=180)
+
+    # For non-optional coordinates in ImageSetHeader
+    @field_validator('image_latitude')
+    def validate_latitude(cls, v):
+        if v is None:
+            raise ValueError("Latitude is required")
+        return v
+
+    @field_validator('image_longitude')
+    def validate_longitude(cls, v):
+        if v is None:
+            raise ValueError("Longitude is required")
+        return v
+
+
 @ifdo_model
 class ImageData:
     # iFDO core
     image_datetime: Optional[datetime] = None
-    image_latitude: Optional[float] = None
-    image_longitude: Optional[float] = None
+    image_latitude: Optional[float] = Field(None, ge=-90, le=90)
+    image_longitude: Optional[float] = Field(None, ge=-180, le=180)
     image_altitude: Optional[float] = None
     image_coordinate_reference_system: Optional[str] = None
     image_coordinate_uncertainty_meters: Optional[float] = None
@@ -256,8 +275,8 @@ class ImageSetHeader:
     
     # iFDO core
     image_datetime: Optional[datetime] = None
-    image_latitude: Optional[float] = None
-    image_longitude: Optional[float] = None
+    image_latitude: Optional[float] = Field(None, ge=-90, le=90)
+    image_longitude: Optional[float] = Field(None, ge=-180, le=180)
     image_altitude: Optional[float] = None
     image_coordinate_reference_system: Optional[str] = None
     image_coordinate_uncertainty_meters: Optional[float] = None
