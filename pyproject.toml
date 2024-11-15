@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "ifdo"
-version = "1.1.3"
+version = "1.2.0"
 description = "iFDO utilities"
 authors = [
     "Kevin Barnard <kbarnard@mbari.org>",
@@ -14,6 +14,13 @@ python = "^3.10"
 stringcase = "^1.2.0"
 pyyaml = "^6.0"
 pydantic = "^2.4.2"
+
+[tool.poetry.group.dev.dependencies]
+pre-commit = "^4.0.1"
+ruff = "^0.7.3"
+black = "^24.10.0"
+mypy = "^1.13.0"
+bandit = "^1.7.10"
 
 [build-system]
 requires = ["poetry-core"]
