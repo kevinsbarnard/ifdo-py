@@ -96,6 +96,8 @@ def encode_value(value: Any) -> Any:
 
 
 T = TypeVar("T")
+
+
 def model(case_func: Callable | None = None) -> Callable[[type[T]], type[T]]:
     """
     Decorator that creates a dataclass with methods to convert it to/from a dict object.
@@ -106,6 +108,7 @@ def model(case_func: Callable | None = None) -> Callable[[type[T]], type[T]]:
     Returns:
         Decorator function that converts a class into a dataclass with to_dict and from_dict methods.
     """
+
     def decorator(cls: type[T]) -> type[T]:
         # Turn the class into a dataclass
         cls = dataclass(cls)
@@ -175,4 +178,5 @@ def model(case_func: Callable | None = None) -> Callable[[type[T]], type[T]]:
 
         # Return the modified class
         return cls
+
     return decorator
