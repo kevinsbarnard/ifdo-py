@@ -175,11 +175,10 @@ class PhotometricCalibration:
 
 @ifdo_model
 class ImageData:
-    # iFDO core (required)
+    # iFDO core
     image_datetime: Optional[datetime] = None
     image_latitude: Optional[float] = None
     image_longitude: Optional[float] = None
-    image_depth: Optional[float] = None
     image_altitude: Optional[float] = None
     image_coordinate_reference_system: Optional[str] = None
     image_coordinate_uncertainty_meters: Optional[float] = None
@@ -254,11 +253,10 @@ class ImageSetHeader:
     image_set_handle: str
     image_set_ifdo_version: str = "v1.0.0"
     
-    # iFDO core (required)
+    # iFDO core
     image_datetime: Optional[datetime] = None
     image_latitude: Optional[float] = None
     image_longitude: Optional[float] = None
-    image_depth: Optional[float] = None
     image_altitude: Optional[float] = None
     image_coordinate_reference_system: Optional[str] = None
     image_coordinate_uncertainty_meters: Optional[float] = None
