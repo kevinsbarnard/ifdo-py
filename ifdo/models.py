@@ -28,6 +28,7 @@ class ImageDeployment(str, Enum):
     SURVEY = "survey"
     EXPLORATION = "exploration"
     EXPERIMENT = "experiment"
+    SAMPLING = "sampling"
 
 
 class ImageNavigation(str, Enum):
