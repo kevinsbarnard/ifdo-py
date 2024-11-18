@@ -536,6 +536,9 @@ class Context:
     name: str
     uri: str | None = None
 
+    def __hash__(self) -> int:
+        return hash((self.name, self.uri))
+
 
 @ifdo_model
 class License:
