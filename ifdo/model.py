@@ -2,6 +2,7 @@ from collections.abc import Callable
 from dataclasses import MISSING, fields
 from datetime import datetime
 from enum import Enum
+from types import UnionType
 from typing import Any, TypeVar, Union, get_args, get_origin
 
 from pydantic.dataclasses import dataclass
@@ -41,7 +42,7 @@ def parse_field(field_type, value: Any) -> Any:
     field_origin = get_origin(field_type)
     field_args = get_args(field_type)
 
-    optional = field_origin is Union and type(None) in field_args  # Check if Optional
+    optional = (field_origin is Union or field_origin is UnionType) and type(None) in field_args  # Check if Optional
     if optional and len(field_args) > 2:  # Reject Union with NoneType with more than 2 types
         raise ValueError(f"Union with NoneType with more than 2 types is not supported: {field_type}")
 
