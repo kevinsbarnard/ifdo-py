@@ -29,6 +29,7 @@ Classes:
     ImageCaptureMode: Enumeration for image capture modes.
     ImageFaunaAttraction: Enumeration for image fauna attraction types.
     ImagePI: Represents an image Principal Investigator.
+    ImageCreator: Represents an image creator.
     ImageAnnotationLabel: Represents an image annotation label.
     ImageAnnotationCreator: Represents an image annotation creator.
     AnnotationLabel: Represents an annotation label with metadata.
@@ -280,6 +281,24 @@ class ImagePI:
 
     This class models an image PI, typically used in scientific or research contexts where images are associated with
     a principal investigator. It stores the PI's name and ORCID (Open Researcher and Contributor ID) for proper
+    attribution and identification.
+
+    Attributes:
+        name (str): The full name of the principal investigator.
+        uri (str): A URI pointing to details of the PI. Could be an ORCID URI.
+    """
+
+    name: str
+    uri: str | None = None
+
+
+@ifdo_model
+class ImageCreator:
+    """
+    Represent an image creator with associated information.
+
+    This class models an image creator, typically used in scientific or research contexts where images are associated
+    with image creators. It stores the creator's name and ORCID (Open Researcher and Contributor ID) for proper
     attribution and identification.
 
     Attributes:
