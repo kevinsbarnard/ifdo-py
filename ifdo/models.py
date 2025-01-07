@@ -302,8 +302,8 @@ class ImageCreator:
     attribution and identification.
 
     Attributes:
-        name (str): The full name of the principal investigator.
-        uri (str): A URI pointing to details of the PI. Could be an ORCID URI.
+        name (str): The full name of the image creator.
+        uri (str): A URI pointing to details of the image creator. Could be an ORCID URI.
     """
 
     name: str
@@ -672,7 +672,7 @@ class ImageData:
         image_uuid (str | None): Unique identifier for the image.
         image_hash_sha256 (str | None): SHA256 hash of the image file.
         image_pi (ImagePI | None): Principal investigator information.
-        image_creators (list[ImagePI] | None): List of individuals who created or contributed to the image.
+        image_creators (list[ImageCreator] | None): List of individuals who created or contributed to the image.
         image_license (License | None): License information for the image.
         image_copyright (str | None): Copyright information for the image.
         image_abstract (str | None): Brief description or abstract of the image content.
@@ -739,7 +739,7 @@ class ImageData:
     image_uuid: str | None = None
     image_hash_sha256: str | None = None
     image_pi: ImagePI | None = None
-    image_creators: list[ImagePI] | None = None
+    image_creators: list[ImageCreator] | None = None
     image_license: License | None = None
     image_copyright: str | None = None
     image_abstract: str | None = None
@@ -819,7 +819,7 @@ class ImageSetHeader:
         image_uuid (str | None): Unique identifier for the image.
         image_hash_sha256 (str | None): SHA256 hash of the image file.
         image_pi (ImagePI | None): Principal investigator information.
-        image_creators (list[ImagePI] | None): List of individuals who created or contributed to the image.
+        image_creators (list[ImageCreator] | None): List of individuals who created or contributed to the image.
         image_license (License | None): License information for the image.
         image_copyright (str | None): Copyright information for the image.
         image_abstract (str | None): Brief description or abstract of the image content.
@@ -891,7 +891,7 @@ class ImageSetHeader:
     image_uuid: str | None = None
     image_hash_sha256: str | None = None
     image_pi: ImagePI | None = None
-    image_creators: list[ImagePI] | None = None
+    image_creators: list[ImageCreator] | None = None
     image_license: License | None = None
     image_copyright: str | None = None
     image_abstract: str | None = None
