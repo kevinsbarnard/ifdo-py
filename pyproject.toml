@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "ifdo"
-version = "1.2.3"
+version = "1.2.4"
 description = "Python iFDO implementation"
 authors = [
     "Kevin Barnard <kbarnard@mbari.org>",
