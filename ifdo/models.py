@@ -34,12 +34,12 @@ Classes:
     ImageAnnotationCreator: Represents an image annotation creator.
     AnnotationLabel: Represents an annotation label with metadata.
     ImageAnnotation: Represents an image annotation with coordinates and labels.
-    CameraPose: Represents a camera pose with UTM coordinates and orientation.
-    CameraHousingViewport: Represents a camera housing viewport.
-    FlatportParameters: Defines parameters for a flatport in an optical system.
-    DomeportParameters: Defines parameters for a domeport in an optical system.
-    CameraCalibrationModel: Defines a camera calibration model.
-    PhotometricCalibration: Represents photometric calibration parameters.
+    ImageCameraPose: Represents a camera pose with UTM coordinates and orientation.
+    ImageCameraHousingViewport: Represents a camera housing viewport.
+    ImageFlatportParameters: Defines parameters for a flatport in an optical system.
+    ImageDomeportParameters: Defines parameters for a domeport in an optical system.
+    ImageCameraCalibrationModel: Defines a camera calibration model.
+    ImagePhotometricCalibration: Represents photometric calibration parameters.
     CoordinateValidation: Validates and stores image coordinate data.
     ImageData: Represents image data with associated metadata and annotations.
     ImageSetHeader: Represents an image set header with detailed metadata.
@@ -394,7 +394,7 @@ class ImageAnnotation:
 
 
 @ifdo_model
-class CameraPose:
+class ImageCameraPose:
     """
     Represent a camera pose with UTM coordinates and orientation.
 
@@ -418,7 +418,7 @@ class CameraPose:
 
 
 @ifdo_model
-class CameraHousingViewport:
+class ImageCameraHousingViewport:
     """
     Represent a camera housing viewport with its properties.
 
@@ -439,7 +439,7 @@ class CameraHousingViewport:
 
 
 @ifdo_model
-class FlatportParameters:
+class ImageFlatportParameters:
     """
     Define parameters for a flatport in an optical system.
 
@@ -462,7 +462,7 @@ class FlatportParameters:
 
 
 @ifdo_model
-class DomeportParameters:
+class ImageDomeportParameters:
     """
     Define parameters for a domeport in an optical system.
 
@@ -484,7 +484,7 @@ class DomeportParameters:
 
 
 @ifdo_model
-class CameraCalibrationModel:
+class ImageCameraCalibrationModel:
     """
     Define a camera calibration model with intrinsic parameters and distortion coefficients.
 
@@ -513,7 +513,7 @@ class CameraCalibrationModel:
 
 
 @ifdo_model
-class PhotometricCalibration:
+class ImagePhotometricCalibration:
     """
     Represent photometric calibration parameters for image processing.
 
@@ -540,7 +540,7 @@ class PhotometricCalibration:
 
 
 @ifdo_model
-class Context:
+class ImageContext:
     """
     Represent a context within the ifdo model framework.
 
@@ -560,7 +560,7 @@ class Context:
 
 
 @ifdo_model
-class License:
+class ImageLicense:
     """
     Represent a software license.
 
@@ -664,16 +664,16 @@ class ImageData:
         image_altitude_meters (float | None): Altitude at which the image was captured.
         image_coordinate_reference_system (str | None): Coordinate reference system used for geolocation.
         image_coordinate_uncertainty_meters (float | None): Uncertainty of the coordinate measurement in meters.
-        image_context (Context | None): Context or setting in which the image was captured.
-        image_project (Context | None): Project or study associated with the image.
-        image_event (Context | None): Specific event during which the image was captured.
-        image_platform (Context | None): Platform or vehicle used for image capture.
-        image_sensor (Context | None): Sensor or camera used to capture the image.
+        image_context (ImageContext | None): Context or setting in which the image was captured.
+        image_project (ImageContext | None): Project or study associated with the image.
+        image_event (ImageContext | None): Specific event during which the image was captured.
+        image_platform (ImageContext | None): Platform or vehicle used for image capture.
+        image_sensor (ImageContext | None): Sensor or camera used to capture the image.
         image_uuid (str | None): Unique identifier for the image.
         image_hash_sha256 (str | None): SHA256 hash of the image file.
         image_pi (ImagePI | None): Principal investigator information.
         image_creators (list[ImageCreator] | None): List of individuals who created or contributed to the image.
-        image_license (License | None): License information for the image.
+        image_license (ImageLicense | None): License information for the image.
         image_copyright (str | None): Copyright information for the image.
         image_abstract (str | None): Brief description or abstract of the image content.
         image_acquisition (ImageAcquisition | None): Details about the image acquisition process.
@@ -695,12 +695,12 @@ class ImageData:
         image_camera_roll_degrees (float | None): Camera roll angle in degrees.
         image_overlap_fraction (float | None): The average overlap of two consecutive images.
         image_datetime_format (str | None): Format used for the image_datetime field.
-        image_camera_pose (CameraPose | None): Camera pose information.
-        image_camera_housing_viewport (CameraHousingViewport | None): Information about the camera housing viewport.
-        image_flatport_parameters (FlatportParameters | None): Parameters for flat port camera housings.
-        image_domeport_parameters (DomeportParameters | None): Parameters for dome port camera housings.
-        image_camera_calibration_model (CameraCalibrationModel | None): Camera calibration model information.
-        image_photometric_calibration (PhotometricCalibration | None): Photometric calibration information.
+        image_camera_pose (ImageCameraPose | None): Camera pose information.
+        image_camera_housing_viewport (ImageCameraHousingViewport | None): Information about the camera housing viewport.
+        image_flatport_parameters (ImageFlatportParameters | None): Parameters for flat port camera housings.
+        image_domeport_parameters (ImageDomeportParameters | None): Parameters for dome port camera housings.
+        image_camera_calibration_model (ImageCameraCalibrationModel | None): Camera calibration model information.
+        image_photometric_calibration (ImagePhotometricCalibration | None): Photometric calibration information.
         image_objective (str | None): Objective or purpose of the image capture.
         image_target_environment (str | None): Target environment for the image capture.
         image_target_timescale (str | None): Target timescale for the image capture.
@@ -731,16 +731,16 @@ class ImageData:
     image_altitude_meters: float | None = None
     image_coordinate_reference_system: str | None = None
     image_coordinate_uncertainty_meters: float | None = None
-    image_context: Context | None = None
-    image_project: Context | None = None
-    image_event: Context | None = None
-    image_platform: Context | None = None
-    image_sensor: Context | None = None
+    image_context: ImageContext | None = None
+    image_project: ImageContext | None = None
+    image_event: ImageContext | None = None
+    image_platform: ImageContext | None = None
+    image_sensor: ImageContext | None = None
     image_uuid: str | None = None
     image_hash_sha256: str | None = None
     image_pi: ImagePI | None = None
     image_creators: list[ImageCreator] | None = None
-    image_license: License | None = None
+    image_license: ImageLicense | None = None
     image_copyright: str | None = None
     image_abstract: str | None = None
 
@@ -764,12 +764,12 @@ class ImageData:
     image_camera_roll_degrees: float | None = None
     image_overlap_fraction: float | None = None
     image_datetime_format: str | None = None
-    image_camera_pose: CameraPose | None = None
-    image_camera_housing_viewport: CameraHousingViewport | None = None
-    image_flatport_parameters: FlatportParameters | None = None
-    image_domeport_parameters: DomeportParameters | None = None
-    image_camera_calibration_model: CameraCalibrationModel | None = None
-    image_photometric_calibration: PhotometricCalibration | None = None
+    image_camera_pose: ImageCameraPose | None = None
+    image_camera_housing_viewport: ImageCameraHousingViewport | None = None
+    image_flatport_parameters: ImageFlatportParameters | None = None
+    image_domeport_parameters: ImageDomeportParameters | None = None
+    image_camera_calibration_model: ImageCameraCalibrationModel | None = None
+    image_photometric_calibration: ImagePhotometricCalibration | None = None
     image_objective: str | None = None
     image_target_environment: str | None = None
     image_target_timescale: str | None = None
@@ -811,16 +811,16 @@ class ImageSetHeader:
         image_altitude_meters (float | None): Altitude at which the image was captured.
         image_coordinate_reference_system (str | None): Coordinate reference system used for geolocation.
         image_coordinate_uncertainty_meters (float | None): Uncertainty of the coordinate measurement in meters.
-        image_context (Context | None): Context or setting in which the image was captured.
-        image_project (Context | None): Project or study associated with the image.
-        image_event (Context | None): Specific event during which the image was captured.
-        image_platform (Context | None): Platform or vehicle used for image capture.
-        image_sensor (Context | None): Sensor or camera used to capture the image.
+        image_context (ImageContext | None): Context or setting in which the image was captured.
+        image_project (ImageContext | None): Project or study associated with the image.
+        image_event (ImageContext | None): Specific event during which the image was captured.
+        image_platform (ImageContext | None): Platform or vehicle used for image capture.
+        image_sensor (ImageContext | None): Sensor or camera used to capture the image.
         image_uuid (str | None): Unique identifier for the image.
         image_hash_sha256 (str | None): SHA256 hash of the image file.
         image_pi (ImagePI | None): Principal investigator information.
         image_creators (list[ImageCreator] | None): List of individuals who created or contributed to the image.
-        image_license (License | None): License information for the image.
+        image_license (ImageLicense | None): License information for the image.
         image_copyright (str | None): Copyright information for the image.
         image_abstract (str | None): Brief description or abstract of the image content.
         image_acquisition (ImageAcquisition | None): Details about the image acquisition process.
@@ -842,12 +842,12 @@ class ImageSetHeader:
         image_camera_roll_degrees (float | None): Camera roll angle in degrees.
         image_overlap_fraction (float | None): The average overlap of two consecutive images.
         image_datetime_format (str | None): Format used for the image_datetime field.
-        image_camera_pose (CameraPose | None): Camera pose information.
-        image_camera_housing_viewport (CameraHousingViewport | None): Information about the camera housing viewport.
-        image_flatport_parameters (FlatportParameters | None): Parameters for flat port camera housings.
-        image_domeport_parameters (DomeportParameters | None): Parameters for dome port camera housings.
-        image_camera_calibration_model (CameraCalibrationModel | None): Camera calibration model information.
-        image_photometric_calibration (PhotometricCalibration | None): Photometric calibration information.
+        image_camera_pose (ImageCameraPose | None): Camera pose information.
+        image_camera_housing_viewport (ImageCameraHousingViewport | None): Information about the camera housing viewport.
+        image_flatport_parameters (ImageFlatportParameters | None): Parameters for flat port camera housings.
+        image_domeport_parameters (ImageDomeportParameters | None): Parameters for dome port camera housings.
+        image_camera_calibration_model (ImageCameraCalibrationModel | None): Camera calibration model information.
+        image_photometric_calibration (ImagePhotometricCalibration | None): Photometric calibration information.
         image_objective (str | None): Objective or purpose of the image capture.
         image_target_environment (str | None): Target environment for the image capture.
         image_target_timescale (str | None): Target timescale for the image capture.
@@ -883,16 +883,16 @@ class ImageSetHeader:
     image_altitude_meters: float | None = None
     image_coordinate_reference_system: str | None = None
     image_coordinate_uncertainty_meters: float | None = None
-    image_context: Context | None = None
-    image_project: Context | None = None
-    image_event: Context | None = None
-    image_platform: Context | None = None
-    image_sensor: Context | None = None
+    image_context: ImageContext | None = None
+    image_project: ImageContext | None = None
+    image_event: ImageContext | None = None
+    image_platform: ImageContext | None = None
+    image_sensor: ImageContext | None = None
     image_uuid: str | None = None
     image_hash_sha256: str | None = None
     image_pi: ImagePI | None = None
     image_creators: list[ImageCreator] | None = None
-    image_license: License | None = None
+    image_license: ImageLicense | None = None
     image_copyright: str | None = None
     image_abstract: str | None = None
 
@@ -916,12 +916,12 @@ class ImageSetHeader:
     image_camera_roll_degrees: float | None = None
     image_overlap_fraction: float | None = None
     image_datetime_format: str | None = None
-    image_camera_pose: CameraPose | None = None
-    image_camera_housing_viewport: CameraHousingViewport | None = None
-    image_flatport_parameters: FlatportParameters | None = None
-    image_domeport_parameters: DomeportParameters | None = None
-    image_camera_calibration_model: CameraCalibrationModel | None = None
-    image_photometric_calibration: PhotometricCalibration | None = None
+    image_camera_pose: ImageCameraPose | None = None
+    image_camera_housing_viewport: ImageCameraHousingViewport | None = None
+    image_flatport_parameters: ImageFlatportParameters | None = None
+    image_domeport_parameters: ImageDomeportParameters | None = None
+    image_camera_calibration_model: ImageCameraCalibrationModel | None = None
+    image_photometric_calibration: ImagePhotometricCalibration | None = None
     image_objective: str | None = None
     image_target_environment: str | None = None
     image_target_timescale: str | None = None
