@@ -1,0 +1,111 @@
+{
+    "$schema": "https://marine-imaging.com/fair/schemas/ifdo-v2.0.0.json",
+    "image-set-header": {
+        "image-set-ifdo-version": "v2.0.0",
+        "image-set-name": "SO268 SO268-1_21-1_OFOS SO_CAM-1_Photo_OFOS",
+        "image-set-uuid": "f840644a-fe4a-46a7-9791-e32c211bcbf5",
+        "image-set-handle": "https://hdl.handle.net/20.500.12085/f840644a-fe4a-46a7-9791-e32c211bcbf5",
+        "image-abstract": "Acquired by camera SO_CAM-1_Photo_OFOS mounted on platform SO_PFM-01_OFOS during project SO268 (event: SO268-1_21-1_OFOS). Navigation data were automatically edited by the MarIQT software (removal of outliers, smoothed and splined to fill time gaps) and linked to the image data by timestamp.",
+        "image-copyright": "(c) GEOMAR Helmholtz Centre for Ocean Research Kiel. Contact: presse@geomar.de",
+        "image-license": {
+            "name": "CC-BY",
+            "uri": "https://creativecommons.org/licenses/by/4.0/legalcode"
+        },
+        "image-context": {
+            "name": "Mining Impact of the Joint Programming Initiative of Healthy and Productive Seas and Oceans (JPIOceans)",
+            "uri": "https://miningimpact.geomar.de/de/miningimpact-2"
+        },
+        "image-project": {
+            "name": "SO268",
+            "uri": "https://doi.org/10.3289/GEOMAR_REP_NS_59_20"
+        },
+        "image-event": {
+            "name": "SO268-1_21-1_OFOS",
+            "uri": "https://portal.geomar.de/metadata/event/show/1603320?leg=348623"
+        },
+        "image-platform": {
+            "name": "SO_PFM-01_OFOS",
+            "uri": "https://dm.pages.geomar.de/equipment/equipment/SO/PFM/SO_PFM-1_OFOS_Isitec/"
+        },
+        "image-sensor": {
+            "name": "SO_CAM-1_Photo_OFOS",
+            "uri": "https://dm.pages.geomar.de/equipment/equipment/SO/CAM/SO_CAM-1_Photo_OFOS/"
+        },
+        "image-pi": {
+            "name": "Timm Schoening",
+            "uri":"https://orcid.org/0000-0002-0035-3282"
+        },
+        "image-creators": [
+            {
+                "name": "Yasemin Bodur",
+                "uri": "https://orcid.org/0000-0001-8758-8617"
+            },
+            {
+                "name": "Timm Schoening",
+                "uri": "https://orcid.org/0000-0002-0035-3282"
+            }
+        ],
+        "image-objective": "Baseline imaging in nodule mining and reference areas. Some pre-/post-impact disturbance mapping",
+        "image-spatial-constraints": "Poly-metallic nodule areas in the Pacific Ocean",
+        "image-spectral-resolution": "rgb",
+        "image-target-environment": "Deep-sea floor, abyssal plains.",
+        "image-temporal-constraints": "No specific temporal constraints, some pre-/post-impact disturbance mapping for a dredge experiment",
+        "image-time-synchronisation": "Manual check and setting of the OFOS cameras to the correct UTC before the deployment",
+        "image-acquisition": "photo",
+        "image-capture-mode": "mixed",
+        "image-coordinate-uncertainty-meters": 4.74,
+        "image-coordinate-reference-system": "EPSG:4326",
+        "image-curation-protocol": "See provenance files for events",
+        "image-deployment": "survey",
+        "image-illumination": "artificial light",
+        "image-item-identification-scheme": "EVENT_SENSOR_DATE_TIME.jpg",
+        "image-marine-zone": "seafloor",
+        "image-navigation": "beacon",
+        "image-quality": "raw",
+        "image-pixel-magnitude": "mm",
+        "image-scale-reference": "laser marker",
+        "image-datetime": "2019-03-04 08:37:24.000000",
+        "image-latitude": 11.9294422,
+        "image-longitude": -117.0407515,
+        "image-altitude-meters": -4094.5
+    },
+    "image-set-items": {
+        "SO268-1_21-1_OFOS_SO_CAM-1_20190304_083724.JPG": [{
+            "image-handle": "",
+            "image-area-square-meters": 21.6994,
+            "image-average-color": [168, 187, 144],
+            "image-datetime": "2019-03-04 08:37:24.000000",
+            "image-altitude-meters": -4094.5,
+            "image-entropy": 0.8174957092476102,
+            "image-hash-sha256": "83f30eb35d1325c44c85fba0cf478825c0a629d20177a945069934f6cd07e087",
+            "image-latitude": 11.9294422,
+            "image-longitude": -117.0407515,
+            "image-mpeg7-colorstatistic": [27.0, 255.0, 38.0, 255.0, 36.0, 255.0, 169.3751983642578, 211.97219848632812, 198.2913360595703, 25.55811309814453, 31.31110954284668, 37.18994140625, 177.0, 224.0, 212.0, 0.8022223711013794, 0.806853175163269, 0.8450505137443542],
+            "image-uuid": "c6b8d981-05c7-449f-85a9-906ab866bfb6"
+        },
+        {
+            "image-datetime": "2019-03-04 08:37:25.000000",
+            "image-latitude": 11.9294422,
+            "image-longitude": -117.0407515
+        }
+        ],
+        "SO268-1_21-1_OFOS_SO_CAM-1_20190304_083734.JPG": [{
+            "image-handle": "",
+            "image-area-square-meters": 29.6263,
+            "image-average-color": [116, 141, 114],
+            "image-datetime": "2019-03-04 08:37:34.000000",
+            "image-altitude-meters": -4094.6,
+            "image-entropy": 0.8340960692175852,
+            "image-hash-sha256": "819e1810dccd9025310d7841a994b94bcdc438ae74ec5095ce01f1bd46143c4e",
+            "image-latitude": 11.9294418,
+            "image-longitude": -117.040753,
+            "image-uuid": "daad4a74-5c16-49d0-9775-efa67f0459f4"
+        },
+        {
+            "image-datetime": "2019-03-04 08:37:35.000000",
+            "image-latitude": 11.9294418,
+            "image-longitude": -117.040753
+        }
+        ]
+    }
+}
