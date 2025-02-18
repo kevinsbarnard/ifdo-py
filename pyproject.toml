@@ -15,8 +15,6 @@ stringcase = "^1.2.0"
 pyyaml = "^6.0"
 pydantic = "^2.4.2"
 pytest = "^8.3.4"
-nox = "^2025.2.9"
-jsonschema = "^4.23.0"
 
 [tool.poetry.group.dev.dependencies]
 pre-commit = "^4.0.1"
@@ -25,6 +23,9 @@ black = "^24.10.0"
 mypy = "^1.13.0"
 bandit = "^1.7.10"
 types-pyyaml = "^6.0.12.20240917"
+nox = "^2025.2.9"
+jsonschema = "^4.23.0"
+nox-poetry = "^1.1.0"
 
 [build-system]
 requires = ["poetry-core"]
