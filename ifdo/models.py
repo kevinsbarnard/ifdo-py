@@ -738,6 +738,7 @@ class ImageData:
     image_sensor: ImageContext | None = None
     image_uuid: str | None = None
     image_hash_sha256: str | None = None
+    image_handle: str | None = None
     image_pi: ImagePI | None = None
     image_creators: list[ImageCreator] | None = None
     image_license: ImageLicense | None = None
