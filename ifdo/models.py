@@ -53,7 +53,8 @@ from typing import Any
 
 from pydantic import BaseModel, Field, field_validator
 from stringcase import spinalcase
-from yaml import safe_dump, safe_load
+from yaml import safe_dump as yaml_dump, safe_load as yaml_load
+from json import dump as json_dump, load as json_load
 
 from ifdo.model import model
 
@@ -962,8 +963,8 @@ class iFDO:  # noqa: N801
         image_set_items (dict[str, list[ImageData]]): A dictionary mapping keys to lists of ImageData objects.
 
     Methods:
-        load(path: str | Path) -> 'iFDO': Class method to load an iFDO object from a YAML file.
-        save(path: str | Path) -> None: Instance method to save the iFDO object to a YAML file.
+        load(path: str | Path) -> 'iFDO': Class method to load an iFDO object from a YAML or JSON file.
+        save(path: str | Path) -> None: Instance method to save the iFDO object to a YAML or JSON file.
 
     Example:
         # Load an existing iFDO from a YAML file
@@ -983,26 +984,47 @@ class iFDO:  # noqa: N801
     @classmethod
     def load(cls, path: str | Path) -> "iFDO":
         """
-        Load an iFDO from a YAML file.
+        Load an iFDO from a YAML or JSON file.
 
         Args:
-            path: Path to the YAML file.
+            path: Path to the file. Should have a suffix of `.yaml`, `.yml`, or `.json`.
 
         Returns:
             The loaded iFDO object.
+
+        Raises:
+            ValueError: If the file format is not supported.
         """
         path = Path(path)  # Ensure Path object
         with path.open() as f:
-            d = safe_load(f)
+            suffix = path.suffix.lower().lstrip(".")
+            if suffix in ("yaml", "yml"):
+                d = yaml_load(f)
+            elif suffix == "json":
+                d = json_load(f)
+            else:
+                raise ValueError("Unsupported file format. Use YAML (.yaml, .yml) or JSON (.json).")
+
         return cls.from_dict(d)
 
     def save(self, path: str | Path) -> None:
         """
-        Save to a YAML file.
+        Save to a YAML or JSON file. Should have a suffix of `.yaml`, `.yml`, or `.json`.
 
         Args:
-            path: Path to the YAML file.
+            path: Path to the file.
+
+        Raises:
+            ValueError: If the file format is not supported
         """
         path = Path(path)  # Ensure Path object
         with path.open("w") as f:
-            safe_dump(self.to_dict(), f, sort_keys=False)
+            suffix = path.suffix.lower().lstrip(".")
+            if suffix in ("yaml", "yml"):
+                yaml_dump(self.to_dict(), f, sort_keys=False)
+            elif suffix == "json":
+                json_dump(self.to_dict(), f, indent=2)
+            else:
+                raise ValueError(
+                    "Unsupported file format. Use YAML (.yaml, .yml) or JSON (.json).",
+                )
