@@ -1,7 +1,5 @@
 import datetime
-from tempfile import NamedTemporaryFile
 
-import yaml
 import json
 
 from ifdo import iFDO
