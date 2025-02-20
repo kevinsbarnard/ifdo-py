@@ -25,7 +25,6 @@ types-pyyaml = "^6.0.12.20240917"
 pytest = "^8.3.4"
 nox = "^2025.2.9"
 jsonschema = "^4.23.0"
-nox-poetry = "^1.1.0"
 
 [build-system]
 requires = ["poetry-core"]
