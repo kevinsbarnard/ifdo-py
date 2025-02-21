@@ -1,3 +1,3 @@
-from ifdo.models import iFDO
+from ifdo.models.ifdo import iFDO
 
 __all__ = ["iFDO"]
