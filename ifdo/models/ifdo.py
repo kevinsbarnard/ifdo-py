@@ -17,30 +17,6 @@ Imports:
     ifdo.model: Contains the base model implementation for iFDO classes.
 
 Classes:
-    ImageAcquisition: Enumeration for image acquisition types.
-    ImageQuality: Enumeration for image quality levels.
-    ImageDeployment: Enumeration for image deployment strategies.
-    ImageNavigation: Enumeration for image navigation types.
-    ImageScaleReference: Enumeration for image scale reference types.
-    ImageIllumination: Enumeration for types of image illumination.
-    ImagePixelMagnitude: Enumeration for image pixel magnitude units.
-    ImageMarineZone: Enumeration for different marine zones.
-    ImageSpectralResolution: Enumeration for image spectral resolution types.
-    ImageCaptureMode: Enumeration for image capture modes.
-    ImageFaunaAttraction: Enumeration for image fauna attraction types.
-    ImagePI: Represents an image Principal Investigator.
-    ImageCreator: Represents an image creator.
-    ImageAnnotationLabel: Represents an image annotation label.
-    ImageAnnotationCreator: Represents an image annotation creator.
-    AnnotationLabel: Represents an annotation label with metadata.
-    ImageAnnotation: Represents an image annotation with coordinates and labels.
-    ImageCameraPose: Represents a camera pose with UTM coordinates and orientation.
-    ImageCameraHousingViewport: Represents a camera housing viewport.
-    ImageFlatportParameters: Defines parameters for a flatport in an optical system.
-    ImageDomeportParameters: Defines parameters for a domeport in an optical system.
-    ImageCameraCalibrationModel: Defines a camera calibration model.
-    ImagePhotometricCalibration: Represents photometric calibration parameters.
-    CoordinateValidation: Validates and stores image coordinate data.
     ImageData: Represents image data with associated metadata and annotations.
     ImageSetHeader: Represents an image set header with detailed metadata.
     iFDO: Implements the Image FAIR Digital Object specification.

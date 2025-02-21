@@ -18,7 +18,7 @@ from ifdo.models.ifdo_capture import (
     ImageScaleReference,
     ImageSpectralResolution,
 )
-from ifdo.models.ifdo_content import ImageAnnotation, ImageAnnotationCreator, ImageAnnotationLabel
+from ifdo.models.ifdo_content import ImageAnnotation, ImageAnnotationCreator, ImageAnnotationLabel, AnnotationLabel
 from ifdo.models.ifdo_core import ImageContext, ImageCreator, ImageLicense, ImagePI
 
 __all__ = [
@@ -48,4 +48,5 @@ __all__ = [
     "ImageAnnotation",
     "ImageAnnotationLabel",
     "ImageAnnotationCreator",
+    "AnnotationLabel"
 ]

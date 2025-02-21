@@ -1,3 +1,13 @@
+"""
+Define and implement the Image FAIR Digital Object (iFDO) specification for the core section.
+
+Classes:
+    ImagePI: Represents an image Principal Investigator.
+    ImageCreator: Represents an image creator.
+    ImageContext: Represents an image context.
+    ImageLicense: Represents an image license.
+"""
+
 from datetime import datetime
 
 from pydantic import BaseModel, Field

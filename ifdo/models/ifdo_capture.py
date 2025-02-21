@@ -1,3 +1,25 @@
+"""
+Define and implement the Image FAIR Digital Object (iFDO) specification for the capture section.
+
+Classes:
+    ImageAcquisition: Enumeration for image acquisition types.
+    ImageQuality: Enumeration for image quality levels.
+    ImageDeployment: Enumeration for image deployment strategies.
+    ImageNavigation: Enumeration for image navigation types.
+    ImageScaleReference: Enumeration for image scale reference types.
+    ImageIllumination: Enumeration for types of image illumination.
+    ImagePixelMagnitude: Enumeration for image pixel magnitude units.
+    ImageMarineZone: Enumeration for different marine zones.
+    ImageSpectralResolution: Enumeration for image spectral resolution types.
+    ImageCaptureMode: Enumeration for image capture modes.
+    ImageFaunaAttraction: Enumeration for image fauna attraction types.
+    ImageCameraPose: Represents a camera pose with UTM coordinates and orientation.
+    ImageCameraHousingViewport: Represents a camera housing viewport.
+    ImageFlatportParameters: Defines parameters for a flatport in an optical system.
+    ImageDomeportParameters: Defines parameters for a domeport in an optical system.
+    ImageCameraCalibrationModel: Defines a camera calibration model.
+    ImagePhotometricCalibration: Represents photometric calibration parameters.
+"""
 from enum import Enum
 from typing import Any
 

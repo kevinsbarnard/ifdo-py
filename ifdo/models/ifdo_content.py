@@ -1,3 +1,13 @@
+"""
+Define and implement the Image FAIR Digital Object (iFDO) specification for the content section.
+
+Classes:
+    ImageAnnotationLabel: Represents an image annotation label.
+    ImageAnnotationCreator: Represents an image annotation creator.
+    AnnotationLabel: Represents an annotation label with metadata.
+    ImageAnnotation: Represents an image annotation with coordinates and labels.
+"""
+
 from datetime import datetime
 
 from pydantic import BaseModel
