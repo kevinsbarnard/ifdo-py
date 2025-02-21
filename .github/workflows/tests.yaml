@@ -1,0 +1,16 @@
+name: Tests
+on: push
+
+jobs:
+  pytest:
+    runs-on: ubuntu-latest
+
+    timeout-minutes: 10
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+
+      - name: Install nox
+        uses: wntrblm/nox@2025.02.09
+
+      - run: nox
