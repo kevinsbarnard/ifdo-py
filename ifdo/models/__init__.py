@@ -48,5 +48,5 @@ __all__ = [
     "ImageAnnotation",
     "ImageAnnotationLabel",
     "ImageAnnotationCreator",
-    "AnnotationLabel"
+    "AnnotationLabel",
 ]

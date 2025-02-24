@@ -20,6 +20,7 @@ Classes:
     ImageCameraCalibrationModel: Defines a camera calibration model.
     ImagePhotometricCalibration: Represents photometric calibration parameters.
 """
+
 from enum import Enum
 from typing import Any
 

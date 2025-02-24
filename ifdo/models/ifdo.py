@@ -293,4 +293,3 @@ class iFDO(KebabCaseModel):  # noqa: N801
                 raise ValueError(
                     "Unsupported file format. Use YAML (.yaml, .yml) or JSON (.json).",
                 )
-
