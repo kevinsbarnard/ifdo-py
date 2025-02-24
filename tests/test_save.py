@@ -16,14 +16,14 @@ def test_save():
 
     ifdo.image_set_header.image_abstract = "Acquired by camera SO_CAM-1_Photo_OFOS mounted on platform SO_PFM-01_OFOS during project SO268 (event: SO268-1_21-1_OFOS). Navigation data were automatically edited by the MarIQT software (removal of outliers, smoothed and splined to fill time gaps) and linked to the image data by timestamp."
     ifdo.image_set_header.image_copyright = "Copyright (C)"
-    ifdo.image_set_header.image_license = ImageLicense("CC-BY")
-    ifdo.image_set_header.image_context = ImageContext("Image context")
-    ifdo.image_set_header.image_project = ImageContext("Image project")
-    ifdo.image_set_header.image_event = ImageContext("Image event")
-    ifdo.image_set_header.image_platform = ImageContext("Image Platform")
-    ifdo.image_set_header.image_sensor = ImageContext("Image sensor")
-    ifdo.image_set_header.image_pi = ImagePI("Image PI")
-    ifdo.image_set_header.image_creators = [ImageCreator("Image creator")]
+    ifdo.image_set_header.image_license = ImageLicense(name="CC-BY")
+    ifdo.image_set_header.image_context = ImageContext(name="Image context")
+    ifdo.image_set_header.image_project = ImageContext(name="Image project")
+    ifdo.image_set_header.image_event = ImageContext(name="Image event")
+    ifdo.image_set_header.image_platform = ImageContext(name="Image Platform")
+    ifdo.image_set_header.image_sensor = ImageContext(name="Image sensor")
+    ifdo.image_set_header.image_pi = ImagePI(name="Image PI")
+    ifdo.image_set_header.image_creators = [ImageCreator(name="Image creator")]
     ifdo.image_set_header.image_latitude = 10.0
     ifdo.image_set_header.image_longitude = 10.0
     ifdo.image_set_header.image_altitude_meters = 1.0
@@ -39,6 +39,7 @@ def test_save():
     ifdo.image_set_items["SO268-1_21-1_OFOS_SO_CAM-1_20190304_083724.JPG"] = [image]
 
     result = ifdo.to_dict()
+
     schema = load_json("tests/schema/ifdo-v2.1.0.json")
 
     registry = Registry().with_resources(

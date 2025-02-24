@@ -1,4 +1,3 @@
-from ifdo.models.ifdo import iFDO
 from ifdo.models.ifdo import ImageData, ImageSetHeader
 from ifdo.models.ifdo_capture import (
     ImageAcquisition,
@@ -23,7 +22,6 @@ from ifdo.models.ifdo_content import ImageAnnotation, ImageAnnotationCreator, Im
 from ifdo.models.ifdo_core import ImageContext, ImageCreator, ImageLicense, ImagePI
 
 __all__ = [
-    "iFDO",
     "ImageData",
     "ImageSetHeader",
     "ImagePI",
