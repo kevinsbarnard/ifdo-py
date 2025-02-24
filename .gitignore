@@ -2,3 +2,7 @@
 poetry.lock
 dist/
 .idea/
+.venv/
+uv.lock
+ifdo.egg-info/
+build/
