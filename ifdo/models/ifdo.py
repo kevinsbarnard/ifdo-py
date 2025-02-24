@@ -63,6 +63,7 @@ class ImageData(KebabCaseModel, ImageCoreFields, ImageCaptureFields, ImageConten
         image_sensor (ImageContext | None): Sensor or camera used to capture the image.
         image_uuid (str | None): Unique identifier for the image.
         image_hash_sha256 (str | None): SHA256 hash of the image file.
+        image_handle (str | None): Handle pointing to image.
         image_pi (ImagePI | None): Principal investigator information.
         image_creators (list[ImageCreator] | None): List of individuals who created or contributed to the image.
         image_license (ImageLicense | None): License information for the image.
@@ -192,12 +193,19 @@ class ImageSetHeader(KebabCaseModel, ImageCoreFields, ImageCaptureFields, ImageC
         image_annotation_labels (list[ImageAnnotationLabel] | None): List of annotation labels for the image.
         image_annotation_creators (list[ImageAnnotationCreator] | None): List of annotation creators.
         image_annotations (list[ImageAnnotation] | None): List of annotations for the image.
+        image_uuid (str | None): Unique identifier for the image. Should not be set in the header.
+        image_hash_sha256 (str | None): SHA256 hash of the image file. Should not be set in the header.
+        image_handle (str | None): Handle pointing to image. Should not be set in the header.
     """
 
     image_set_name: str
     image_set_uuid: str
     image_set_handle: str
     image_set_ifdo_version: str = "v2.1.0"
+
+    image_uuid: str | None = None
+    image_hash_sha256: str | None = None
+    image_handle: str | None = None
 
 
 class iFDO(KebabCaseModel):  # noqa: N801
